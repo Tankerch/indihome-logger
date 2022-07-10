@@ -4,7 +4,7 @@ import pythonping
 import time
 
 # CONSTANTS VALUE
-OUTPUT_PATH = "output/results.csv"
+OUTPUT_PATH = "outputs/results.csv"
 TEST_SERVER_URL = "1.1.1.1"
 PING_INTERVAL_IN_SEC = 1
 USING_LOCAL_DATETIME = False
@@ -16,6 +16,8 @@ def get_output_filename() -> str:
 
 
 def init_logger():
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+
     file_open_mode = "a+"
     if os.path.exists(OUTPUT_PATH):
         file_open_mode = "r+"
@@ -25,14 +27,14 @@ def init_logger():
         f.write("timestamp,server,res_time_ms\n")
 
 
-def ping_server() -> int | None:
+def ping_server():
     response = pythonping.ping(TEST_SERVER_URL, timeout=3, count=1)
     if response .packets_lost > 0.5:
         return None
     return response.rtt_avg_ms
 
 
-def log_response(ping_in_ms: int | None):
+def log_response(ping_in_ms):
     current_datetime = datetime.datetime.now() if USING_LOCAL_DATETIME else datetime.datetime.utcnow()
     current_timestamp = int(current_datetime.timestamp())
 
