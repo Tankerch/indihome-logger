@@ -7,7 +7,6 @@ import time
 OUTPUT_PATH = "outputs/results.csv"
 TEST_SERVER_URL = "1.1.1.1"
 PING_INTERVAL_IN_SEC = 1
-USING_LOCAL_DATETIME = False
 # END CONSTANTS VALUE
 
 
@@ -35,7 +34,7 @@ def ping_server():
 
 
 def log_response(ping_in_ms):
-    current_datetime = datetime.datetime.now() if USING_LOCAL_DATETIME else datetime.datetime.utcnow()
+    current_datetime = datetime.datetime.now()
     current_timestamp = int(current_datetime.timestamp())
 
     with open(OUTPUT_PATH, 'a') as f:
