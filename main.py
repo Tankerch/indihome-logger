@@ -19,13 +19,8 @@ PING_INTERVAL_IN_SEC = 1
 # END CONSTANTS VALUE
 
 
-def get_output_filename() -> str:
-    pass
-
-
 def init_logger():
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-
     file_open_mode = "a+"
     if os.path.exists(OUTPUT_PATH):
         file_open_mode = "r+"
@@ -33,6 +28,7 @@ def init_logger():
     with open(OUTPUT_PATH, file_open_mode) as f:
         f.seek(0)
         f.write("timestamp,server,res_time_ms\n")
+    os.chmod(OUTPUT_PATH, 0o666)
 
 
 def ping_server(server_url: str):
